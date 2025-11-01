@@ -28,7 +28,7 @@
   <a href="mailto:tejaswi.ganji2000@gmail.com">
     <img src="https://img.shields.io/badge/Email-Me-red?style=for-the-badge&logo=gmail&logoColor=white" />
   </a>
-  <a href="https://public.tableau.com/app/profile/">
+  <a href="https://public.tableau.com/app/profile/tejaswi.ganji">
     <img src="https://img.shields.io/badge/Tableau-Dashboards-orange?style=for-the-badge&logo=tableau&logoColor=white" />
   </a>
 </p>
