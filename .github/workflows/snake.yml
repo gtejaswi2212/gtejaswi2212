@@ -2,11 +2,15 @@ name: generate-snake
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # runs daily
-  workflow_dispatch:      # lets you run it manually
+    - cron: "0 0 * * *"   # runs every day at 00:00 UTC
+  workflow_dispatch:      # lets you run it manually from the Actions tab
   push:
     branches:
       - main
+
+# 👇 This is the missing part: allow the bot to write to the repo
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -25,10 +29,20 @@ jobs:
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
       - name: Commit and push snake
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p dist
+
+          # Configure git identity for the bot
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Add generated files
           git add dist/github-contribution-grid-snake.svg dist/github-contribution-grid-snake-dark.svg
-          git commit -m "chore: update snake" || echo "no changes to commit"
-          git push
+
+          # Commit if there are changes
+          git commit -m "chore: update snake [skip ci]" || echo "no changes to commit"
+
+          # Set auth to use the GitHub token and push back to main
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/gtejaswi2212/gtejaswi2212.git main
